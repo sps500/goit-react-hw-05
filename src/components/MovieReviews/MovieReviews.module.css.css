@@ -1,0 +1,20 @@
+.container {
+  padding: 20px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.item {
+  margin-bottom: 20px;
+}
+
+.author {
+  font-weight: bold;
+}
+
+.content {
+  margin-top: 10px;
+}

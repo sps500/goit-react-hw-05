@@ -1,0 +1,11 @@
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.link {
+  display: block;
+  margin-top: 20px;
+  color: blue;
+  text-decoration: underline;
+}
