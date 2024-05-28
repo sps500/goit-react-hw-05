@@ -1,15 +1,30 @@
 .nav {
-  padding: 10px;
+  width: 100%;
   background-color: #333;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
 .link {
-  margin-right: 20px;
   color: white;
+  margin: 0 1rem;
   text-decoration: none;
+  font-size: 1.2rem;
 }
 
 .activeLink {
-  font-weight: bold;
+  color: #ff6347;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.link:hover,
+.activeLink:hover {
   text-decoration: underline;
 }

@@ -1,24 +1,21 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./MovieCast.module.css";
 import config from "../../config";
 
-const MovieCast = () => {
-  const { movieId } = useParams();
+const MovieCast = ({ movieId }) => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
     const fetchCast = async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-        {
-          headers: {
-            Authorization: `Bearer ${config.BEARER_TOKEN}`,
-          },
-        }
-      );
-      setCast(response.data.cast);
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${config.API_KEY}`
+        );
+        setCast(response.data.cast);
+      } catch (error) {
+        console.error("Error fetching cast details:", error);
+      }
     };
 
     fetchCast();

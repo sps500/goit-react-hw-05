@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
-
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./MovieDetailsPage.module.css";
 import config from "../../config";
+import MovieCast from "../../components/MovieCast/MovieCast";
+import MovieReviews from "../../components/MovieReviews/MovieReviews";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [movie, setMovie] = useState(null);
+  const [showCast, setShowCast] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -18,7 +21,7 @@ const MovieDetailsPage = () => {
           `https://api.themoviedb.org/3/movie/${movieId}`,
           {
             headers: {
-              Authorization: `Bearer ${config.API_KEY}`,
+              Authorization: `Bearer ${config.BEARER_TOKEN}`,
             },
           }
         );
@@ -33,11 +36,15 @@ const MovieDetailsPage = () => {
 
   const handleGoBack = () => {
     if (location.state && location.state.from) {
-      history.push(location.state.from);
+      navigate(location.state.from);
     } else {
-      history.push("/movies");
+      navigate("/movies");
     }
   };
+
+  const toggleCast = () => setShowCast((prevShowCast) => !prevShowCast);
+  const toggleReviews = () =>
+    setShowReviews((prevShowReviews) => !prevShowReviews);
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -48,13 +55,27 @@ const MovieDetailsPage = () => {
       <button onClick={handleGoBack} className={styles.goBackButton}>
         Go back
       </button>
-      <h1>{movie.title}</h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-        className={styles.poster}
-      />
-      <p>{movie.overview}</p>
+      <div className={styles.detailsContainer}>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          className={styles.poster}
+        />
+        <div className={styles.info}>
+          <h1>{movie.title}</h1>
+          <p>{movie.overview}</p>
+          <div className={styles.buttons}>
+            <button onClick={toggleCast} className={styles.toggleButton}>
+              {showCast ? "Hide Cast" : "Show Cast"}
+            </button>
+            <button onClick={toggleReviews} className={styles.toggleButton}>
+              {showReviews ? "Hide Reviews" : "Show Reviews"}
+            </button>
+          </div>
+        </div>
+      </div>
+      {showCast && <MovieCast movieId={movieId} />}
+      {showReviews && <MovieReviews movieId={movieId} />}
     </div>
   );
 };

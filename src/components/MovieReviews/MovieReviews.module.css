@@ -1,5 +1,5 @@
 .container {
-  padding: 20px;
+  margin-top: 20px;
 }
 
 .list {
@@ -8,7 +8,7 @@
 }
 
 .item {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .author {
@@ -16,5 +16,5 @@
 }
 
 .content {
-  margin-top: 10px;
+  margin-top: 5px;
 }

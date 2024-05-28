@@ -4,14 +4,35 @@
 
 .goBackButton {
   margin-bottom: 20px;
-  padding: 10px 20px;
 }
 
-h1 {
-  margin-bottom: 20px;
+.detailsContainer {
+  display: flex;
 }
 
 .poster {
-  max-width: 100%;
-  margin-bottom: 20px;
+  width: 300px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.toggleButton {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.toggleButton:hover {
+  background-color: #0056b3;
 }
