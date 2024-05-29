@@ -1,38 +1,37 @@
 .container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.goBackButton {
+.details {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 20px;
 }
 
-.detailsContainer {
-  display: flex;
-}
-
 .poster {
-  width: 300px;
-  height: auto;
   margin-right: 20px;
 }
 
 .info {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.buttons {
-  margin-top: 10px;
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
-.toggleButton {
-  margin-right: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
+.link {
+  margin-bottom: 10px;
+  text-decoration: none;
+  color: #000;
 }
 
-.toggleButton:hover {
-  background-color: #0056b3;
+.link:hover {
+  text-decoration: underline;
 }

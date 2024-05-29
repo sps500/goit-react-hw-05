@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
+import { Suspense } from "react";
 import styles from "./MovieDetailsPage.module.css";
 import config from "../../config";
-import MovieCast from "../../components/MovieCast/MovieCast";
-import MovieReviews from "../../components/MovieReviews/MovieReviews";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
   const [movie, setMovie] = useState(null);
-  const [showCast, setShowCast] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -34,28 +30,13 @@ const MovieDetailsPage = () => {
     fetchMovieDetails();
   }, [movieId]);
 
-  const handleGoBack = () => {
-    if (location.state && location.state.from) {
-      navigate(location.state.from);
-    } else {
-      navigate("/movies");
-    }
-  };
-
-  const toggleCast = () => setShowCast((prevShowCast) => !prevShowCast);
-  const toggleReviews = () =>
-    setShowReviews((prevShowReviews) => !prevShowReviews);
-
   if (!movie) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className={styles.container}>
-      <button onClick={handleGoBack} className={styles.goBackButton}>
-        Go back
-      </button>
-      <div className={styles.detailsContainer}>
+      <div className={styles.details}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
@@ -64,18 +45,27 @@ const MovieDetailsPage = () => {
         <div className={styles.info}>
           <h1>{movie.title}</h1>
           <p>{movie.overview}</p>
-          <div className={styles.buttons}>
-            <button onClick={toggleCast} className={styles.toggleButton}>
-              {showCast ? "Hide Cast" : "Show Cast"}
-            </button>
-            <button onClick={toggleReviews} className={styles.toggleButton}>
-              {showReviews ? "Hide Reviews" : "Show Reviews"}
-            </button>
-          </div>
         </div>
       </div>
-      {showCast && <MovieCast movieId={movieId} />}
-      {showReviews && <MovieReviews movieId={movieId} />}
+      <div className={styles.links}>
+        <Link
+          to="cast"
+          state={{ from: location.state?.from }}
+          className={styles.link}
+        >
+          Cast
+        </Link>
+        <Link
+          to="reviews"
+          state={{ from: location.state?.from }}
+          className={styles.link}
+        >
+          Reviews
+        </Link>
+      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
