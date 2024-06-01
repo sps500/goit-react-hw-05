@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Suspense } from "react";
@@ -9,6 +9,7 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const location = useLocation();
+  const backLinkLocationRef = useRef(location.state?.from ?? "/");
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -36,6 +37,11 @@ const MovieDetailsPage = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <Link to={backLinkLocationRef.current} className={styles.goBackButton}>
+          Go Back
+        </Link>
+      </div>
       <div className={styles.details}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
